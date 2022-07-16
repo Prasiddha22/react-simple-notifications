@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 type Props = {
   type: 'info' | 'success' | 'warning' | 'error';
@@ -17,11 +17,33 @@ export const Notification = ({
   onClick,
   onRequestHide,
 }: Props) => {
-  // const className = classnames(['notification', `notification-${type}`]);
+  useEffect(() => {
+    var timer: NodeJS.Timeout | null = null;
+    if (timeOut !== 0) {
+      timer = setTimeout(requestHide, timeOut);
+    }
+
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, []);
+
+  const requestHide = () => {
+    if (onRequestHide) {
+      onRequestHide();
+    }
+  };
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    requestHide();
+  };
+
   const className = `notification notification-${type}`;
   title = title ? <h4 className="title">{title}</h4> : null;
 
-  const handleClick = () => {};
   return (
     <div className={className} onClick={handleClick}>
       <div className="notification-message" role="alert">

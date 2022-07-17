@@ -1,5 +1,8 @@
 import React from 'react';
 
-export const NotificationManager = () => {
+const NotificationManager = () => {
   return <></>;
 };
+
+export default NotificationManager;
+export { NotificationManager };

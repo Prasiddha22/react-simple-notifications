@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import INotificationType from './INotificationType';
+import { INotificationType } from './INotificationType';
 
 export const Notification = ({
   type = 'info',

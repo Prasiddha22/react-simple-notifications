@@ -1,5 +1,8 @@
+import classNames from 'classnames';
 import React from 'react';
-import INotificationType from './INotificationType';
+import { INotificationType } from './INotificationType';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { Notification } from './Notification';
 
 type Props = {
   notifications: INotificationType[];
@@ -20,7 +23,7 @@ export const Notifications = ({
     }
   };
 
-  const className = classnames('notification-container', {
+  const className = classNames('notification-container', {
     'notification-container-empty': notifications.length === 0,
   });
 
@@ -39,7 +42,7 @@ export const Notifications = ({
           message={notification.message}
           timeOut={notification.timeOut}
           onClick={notification.onClick}
-          onRequestHide={this.handleRequestHide(notification)}
+          onRequestHide={handleRequestHide(notification)}
         />
       </CSSTransition>
     );

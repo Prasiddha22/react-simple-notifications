@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-
-type Props = {
-  type: 'info' | 'success' | 'warning' | 'error';
-  message: string;
-  title: React.ReactNode;
-  timeOut: number;
-  onClick: () => void;
-  onRequestHide: () => void;
-};
+import INotificationType from './INotificationType';
 
 export const Notification = ({
   type = 'info',
@@ -16,7 +8,7 @@ export const Notification = ({
   timeOut = 5000,
   onClick,
   onRequestHide,
-}: Props) => {
+}: INotificationType) => {
   useEffect(() => {
     var timer: NodeJS.Timeout | null = null;
     if (timeOut !== 0) {

@@ -20,12 +20,12 @@ const Constants = {
 
 interface NotifyType {
   id?: string;
-  type: string;
+  type?: string;
   message: string;
-  title: string;
-  timeOut: number;
-  onClick: () => void;
-  priority: boolean;
+  title?: string;
+  timeOut?: number;
+  onClick?: () => void;
+  priority?: boolean;
 }
 
 class NotificationManager extends EventEmitter {
@@ -51,7 +51,13 @@ class NotificationManager extends EventEmitter {
     this.emitChange();
   }
 
-  info({ message, title, timeOut, onClick, priority }: NotifyType) {
+  info({
+    message,
+    title = '',
+    timeOut = 5000,
+    onClick,
+    priority = false,
+  }: NotifyType) {
     this.create({
       type: Constants.INFO,
       message,
@@ -62,7 +68,13 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  success({ message, title, timeOut, onClick, priority }: NotifyType) {
+  success({
+    message,
+    title = '',
+    timeOut = 5000,
+    onClick,
+    priority = false,
+  }: NotifyType) {
     this.create({
       type: Constants.SUCCESS,
       message,
@@ -73,7 +85,13 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  warning({ message, title, timeOut, onClick, priority }: NotifyType) {
+  warning({
+    message,
+    title = '',
+    timeOut = 5000,
+    onClick,
+    priority = false,
+  }: NotifyType) {
     this.create({
       type: Constants.WARNING,
       message,
@@ -84,7 +102,13 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  error({ message, title, timeOut, onClick, priority }: NotifyType) {
+  error({
+    message,
+    title = '',
+    timeOut = 5000,
+    onClick,
+    priority = false,
+  }: NotifyType) {
     this.create({
       type: Constants.ERROR,
       message,

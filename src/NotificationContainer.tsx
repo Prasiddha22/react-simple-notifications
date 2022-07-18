@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { INotificationType } from './INotificationType';
 import NotificationManager from './NotificationManager';
+import { Notifications } from './Notifications';
 
 type Props = {
   enterTimeout: number;
@@ -29,5 +30,12 @@ export const NotificationContainer = ({
     NotificationManager.remove(notification);
   };
 
-  return <></>;
+  return (
+    <Notifications
+      enterTimeout={enterTimeout}
+      leaveTimeout={leaveTimeout}
+      notifications={notifications}
+      onRequestHide={handleRequestHide}
+    />
+  );
 };

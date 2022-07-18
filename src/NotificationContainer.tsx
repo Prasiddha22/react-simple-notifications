@@ -21,7 +21,7 @@ export const NotificationContainer = ({
     };
   }, []);
 
-  const handleStoreChange = (notifications: INotificaionType) => {
+  const handleStoreChange = (notifications: INotificationType[]) => {
     setNotifications(notifications);
   };
 

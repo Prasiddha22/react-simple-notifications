@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events';
+import { INotificationType } from './INotificationType';
 
 const createUUID = () => {
   const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
@@ -94,7 +95,7 @@ class NotificationManager extends EventEmitter {
     });
   }
 
-  remove(notification: NotifyType) {
+  remove(notification: INotificationType) {
     this.listNotify = this.listNotify.filter(n => notification.id !== n.id);
     this.emitChange();
   }
@@ -103,11 +104,11 @@ class NotificationManager extends EventEmitter {
     this.emit(Constants.CHANGE, this.listNotify);
   }
 
-  addChangeListener(callback: (listNotify: NotifyType[]) => void) {
+  addChangeListener(callback: (listNotify: INotificationType[]) => void) {
     this.addListener(Constants.CHANGE, callback);
   }
 
-  removeChangeListener(callback: (listNotify: NotifyType[]) => void) {
+  removeChangeListener(callback: (listNotify: INotificationType[]) => void) {
     this.removeListener(Constants.CHANGE, callback);
   }
 }

@@ -1,5 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { INotificationType } from './INotificationType';
+
+const useCallbackRef = (callback: any) => {
+  const callbackRef = React.useRef(callback);
+  useLayoutEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  return callbackRef;
+};
 
 export const Notification = ({
   type = 'info',
@@ -9,22 +18,23 @@ export const Notification = ({
   onClick,
   onRequestHide,
 }: INotificationType) => {
-  useEffect(() => {
-    var timer: NodeJS.Timeout | null = null;
-    if (timeOut !== 0) {
-      timer = setTimeout(requestHide, timeOut);
-    }
-
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, []);
-
   const requestHide = () => {
     if (onRequestHide) {
       onRequestHide();
     }
   };
+
+  const requestHideRef = useCallbackRef(requestHide);
+  useEffect(() => {
+    var timer: NodeJS.Timeout | null = null;
+    if (timeOut !== 0) {
+      timer = setTimeout(requestHideRef.current, timeOut);
+    }
+
+    return () => {
+      timer && clearTimeout(timer);
+    };
+  }, [timeOut, requestHideRef]);
 
   const handleClick = () => {
     if (onClick) {

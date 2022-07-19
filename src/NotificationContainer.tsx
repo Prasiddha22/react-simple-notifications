@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { INotificationType } from './INotificationType';
 import NotificationManager from './NotificationManager';
 import { Notifications } from './Notifications';
+import './Notifications.css';
 
 type Props = {
-  enterTimeout: number;
-  leaveTimeout: number;
+  enterTimeout?: number;
+  leaveTimeout?: number;
 };
 
 export const NotificationContainer = ({

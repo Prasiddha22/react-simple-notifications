@@ -1,14 +1,14 @@
-import { EventEmitter } from 'events';
-import { INotificationType } from './INotificationType';
+import { EventEmitter } from 'events'
+import { INotificationType } from './INotificationType'
 
 const createUUID = () => {
-  const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-  return pattern.replace(/[xy]/g, c => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+  const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+  return pattern.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 
 const Constants = {
   CHANGE: 'change',
@@ -16,23 +16,23 @@ const Constants = {
   SUCCESS: 'success',
   WARNING: 'warning',
   ERROR: 'error',
-};
+}
 
 interface NotifyType {
-  id?: string;
-  type?: string;
-  message: string;
-  title?: string;
-  timeOut?: number;
-  onClick?: () => void;
-  priority?: boolean;
+  id?: string
+  type?: string
+  message: string
+  title?: string
+  timeOut?: number
+  onClick?: () => void
+  priority?: boolean
 }
 
 class NotificationManager extends EventEmitter {
-  listNotify: NotifyType[];
+  listNotify: NotifyType[] = []
   constructor() {
-    super();
-    this.listNotify = [];
+    super()
+    this.listNotify = []
   }
 
   create(notify: NotifyType) {
@@ -42,22 +42,22 @@ class NotificationManager extends EventEmitter {
       title: null,
       message: null,
       timeOut: 5000,
-    };
-    if (notify.priority) {
-      this.listNotify.unshift(Object.assign(defaultNotify, notify));
-    } else {
-      this.listNotify.push(Object.assign(defaultNotify, notify));
     }
-    this.emitChange();
+    if (notify.priority) {
+      this.listNotify.unshift(Object.assign(defaultNotify, notify))
+    } else {
+      this.listNotify.push(Object.assign(defaultNotify, notify))
+    }
+    this.emitChange()
   }
 
-  info({
-    message,
-    title = '',
-    timeOut = 5000,
-    onClick,
-    priority = false,
-  }: NotifyType) {
+  info(
+    message: string,
+    title: string = '',
+    timeOut?: number,
+    onClick?: () => void,
+    priority?: boolean
+  ) {
     this.create({
       type: Constants.INFO,
       message,
@@ -65,16 +65,16 @@ class NotificationManager extends EventEmitter {
       timeOut,
       onClick,
       priority,
-    });
+    })
   }
 
-  success({
-    message,
-    title = '',
-    timeOut = 5000,
-    onClick,
-    priority = false,
-  }: NotifyType) {
+  success(
+    message: string,
+    title: string = '',
+    timeOut?: number,
+    onClick?: () => void,
+    priority?: boolean
+  ) {
     this.create({
       type: Constants.SUCCESS,
       message,
@@ -82,16 +82,16 @@ class NotificationManager extends EventEmitter {
       timeOut,
       onClick,
       priority,
-    });
+    })
   }
 
-  warning({
-    message,
-    title = '',
-    timeOut = 5000,
-    onClick,
-    priority = false,
-  }: NotifyType) {
+  warning(
+    message: string,
+    title: string = '',
+    timeOut?: number,
+    onClick?: () => void,
+    priority?: boolean
+  ) {
     this.create({
       type: Constants.WARNING,
       message,
@@ -99,16 +99,16 @@ class NotificationManager extends EventEmitter {
       timeOut,
       onClick,
       priority,
-    });
+    })
   }
 
-  error({
-    message,
-    title = '',
-    timeOut = 5000,
-    onClick,
-    priority = false,
-  }: NotifyType) {
+  error(
+    message: string,
+    title: string = '',
+    timeOut?: number,
+    onClick?: () => void,
+    priority?: boolean
+  ) {
     this.create({
       type: Constants.ERROR,
       message,
@@ -116,25 +116,25 @@ class NotificationManager extends EventEmitter {
       timeOut,
       onClick,
       priority,
-    });
+    })
   }
 
   remove(notification: INotificationType) {
-    this.listNotify = this.listNotify.filter(n => notification.id !== n.id);
-    this.emitChange();
+    this.listNotify = this.listNotify.filter((n) => notification.id !== n.id)
+    this.emitChange()
   }
 
   emitChange() {
-    this.emit(Constants.CHANGE, this.listNotify);
+    this.emit(Constants.CHANGE, this.listNotify)
   }
 
   addChangeListener(callback: (listNotify: INotificationType[]) => void) {
-    this.addListener(Constants.CHANGE, callback);
+    this.addListener(Constants.CHANGE, callback)
   }
 
   removeChangeListener(callback: (listNotify: INotificationType[]) => void) {
-    this.removeListener(Constants.CHANGE, callback);
+    this.removeListener(Constants.CHANGE, callback)
   }
 }
 
-export default new NotificationManager();
+export default new NotificationManager()
